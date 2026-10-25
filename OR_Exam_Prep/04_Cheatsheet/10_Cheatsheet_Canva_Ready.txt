@@ -1,0 +1,218 @@
+MH6503 Cheatsheet | 排版底稿
+考試規定：一張雙面 A4，內容須「手寫」。本檔供 Canva 排版後照抄；印出版不可帶入考場。
+建議版面：每面 3 欄，標題粗體，公式用等寬字型。
+
+========================================
+PAGE 1 — FRONT SIDE
+A4 Portrait | Concepts & Formulas
+========================================
+
+[Section 1] CPF / Edge
+• CPF = 可行 + active 方程組有唯一解 (rank = n)
+• active > n 條 ⇒ degenerate
+• Edge：保留 n−1 條 active
+  - 方向：代入剩下的 active 約束
+  - improving：Z 嚴格變好（斜率 0 不算）
+• Edge 另一端：沿前進方向第一個撞到的 inactive 約束（含 x ≥ 0）
+  - 沒有約束擋住 ⇒ ray
+  - ray 且 improving ⇒ LP unbounded
+• 退化（p 條 active）：檢查 C(p, n−1) 組
+  - 被夾成一點 ⇒ 捨棄
+  - 同一條線 ⇒ 只算一次
+• 沒有 improving edge ⇒ 最優
+
+[Section 2] SEF / BFS
+• 轉成 SEF：
+  - ≤ ⇒ +s
+  - ≥ ⇒ −s（surplus）
+  - free ⇒ x = x⁺ − x⁻
+  - x ≤ 0 ⇒ 令 x' = −x
+• Basis ⇔ B 可逆；BFS ⇔ B⁻¹b ≥ 0
+• CPF ⇔ BFS（active ⇔ 該變數 = 0）
+• Adjacent basis：只差一個變數（不具遞移性）
+• Degenerate：某基本變數 = 0 ⇒ 同一 BFS 有多個 basis
+
+[Section 3] Reduced cost / Tableau（max）
+• z = v̄ + Σ c̄ⱼ x_Nⱼ，c̄ⱼ = 沿該 edge 的斜率
+• 最優條件：
+  - max：全部 c̄ ≤ 0（僅為充分條件）
+  - min：全部 c̄ ≥ 0
+• MRT：t = min{ b̄ᵢ / āᵢₖ : āᵢₖ > 0 }
+• Unbounded：c̄ₖ > 0 且該欄全部 ≤ 0
+• Δz = c̄ₖ · t
+• Tableau 的 z-row 存 −c̄：
+  - max：z-row 全 ≥ 0 ⇒ 最優；負者進入
+  - min：z-row 全 ≤ 0 ⇒ 最優；正者進入
+• 進入規則：
+  - LC：c̄ 最大（受單位縮放影響）
+  - LI：c̄·t 最大
+  - Bland：進出都選最小下標（比的是變數下標）⇒ 不會 cycle
+• Cycling ⇒ 必有 degenerate pivot（t = 0）
+
+[Section 4] Revised Simplex
+• x_B = B⁻¹b
+• y = c_Bᵀ B⁻¹
+• c̄ⱼ = cⱼ − y·aⱼ；slack 的 c̄ = −yᵢ
+• d = B⁻¹aₖ（即 tableau 的 entering 欄）
+• t = min{ x_Bᵢ / dᵢ : dᵢ > 0 }；沒有 dᵢ > 0 ⇒ unbounded
+• 更新：
+  - x_Bᵢ ← x_Bᵢ − dᵢ·t
+  - 第 r 位 ← t（原地替換，不交換位置）
+  - B⁻¹：R_r ← R_r / d_r；Rᵢ ← Rᵢ − dᵢ·R_r(new)
+
+[Section 5] Duality
+• (P) max cᵀx, Ax ≤ b, x ≥ 0
+  (D) min bᵀy, Aᵀy ≥ c, y ≥ 0
+• Dual 的第 j 條約束 = A 的第 j「欄」
+• 對應表（P 為 max；P 為 min 時全部反向）：
+    主約束 ≤ → y ≥ 0  │ 主變數 x ≥ 0 → 對偶約束 ≥
+    主約束 ≥ → y ≤ 0  │ 主變數 x ≤ 0 → 對偶約束 ≤
+    主約束 = → y free │ 主變數 free  → 對偶約束 =
+• Weak duality：cᵀx̄ ≤ bᵀȳ
+  - 兩者可行且值相等 ⇒ 兩者都最優
+  - P unbounded ⇒ D infeasible
+• 恆等式：bᵀȳ − cᵀx̄ = Σ ȳᵢ·s̄ᵢ + Σ v̄ⱼ·x̄ⱼ
+  （s = b − Ax，v = Aᵀy − c）
+• C.S.：yᵢ·sᵢ = 0，xⱼ·vⱼ = 0（至少一個為 0）
+• C.S. Theorem：x* 最優 ⇔ ∃ 對偶可行 y* 與 x* 滿足 C.S.
+• Strong duality：P 有最優解 ⇒ D 也有，且最優值相等
+• Complementary basis：
+  - 配對 xⱼ ↔ vⱼ，sᵢ ↔ yᵢ
+  - K_N = 主問題「非基本」變數所配對的對偶變數
+  - y*ᵀ = c_Bᵀ B⁻¹；c̄ⱼ = −vⱼ；c̄_sᵢ = −yᵢ
+  - 主問題最優 ⇔ 對偶可行
+• 狀態相容表：
+    P＼D       D最優  D不可行  D無界
+    P最優       ✓      ×       ×
+    P不可行     ×      ✓       ✓
+    P無界       ×      ✓       ×
+• Farkas：
+  - Ax ≤ b, x ≥ 0 無解 ⇔ ∃ l ≥ 0：Aᵀl ≥ 0，bᵀl < 0
+  - Ax = b, x ≥ 0 無解 ⇔ ∃ y：Aᵀy ≥ 0，bᵀy < 0
+
+[Section 6] Sensitivity（J_B 為最優基底）
+• 非基本 cₖ：
+  - 範圍 cₖ_new ≤ y·aₖ（= cₖ − c̄ₖ）
+  - z* 不變
+• 基本 c_r：
+  - 用參數重算 y，對所有非基本 j 要求 c̄ⱼ(c_r) ≤ 0，取交集
+  - z* = c_Bᵀ x_B*
+• 單一 bᵢ：
+  - 範圍：B⁻¹b(bᵢ) ≥ 0，逐分量取交集
+  - z* + yᵢ·Δbᵢ
+• 多個 b 同時變：檢查 x_B* + B⁻¹Δb ≥ 0
+• 新變數 x₀：c̄₀ = c₀ − y·a₀ ≤ 0 ⇒ 基底仍最優
+• Shadow price = yᵢ，只在 bᵢ 的有效範圍內成立
+  - 不緊（slack 為基本變數）的約束 yᵢ = 0
+• 某非基本變數 c̄ = 0 ⇒ 有替代最優解
+• 超出範圍 ⇒ 從原 J_B 繼續 revised simplex
+
+[Section 7] 題型 → 方法
+• 給 CPF 問 edges → 幾何法（保留 n−1 條 active）
+• 有 ≥ 或 = 約束、或 RHS 為負 → two-phase
+• 題目寫 revised 或給出 B⁻¹ → revised simplex
+• 給 x* 問是否最優 → C.S. 三步
+• 目標係數為參數 c → 解出 y(c)，再要求對偶可行
+• 給最優基底問範圍 → sensitivity
+• 證明無解 → W* > 0、約束組合出矛盾、或 Farkas
+• 證明 unbounded → 構造 x̄(l)，說明 z → ∞
+
+[Section 8] 易混淆
+• 可行域無界 ≠ LP unbounded
+• 兩邊目標值相等 ≠ 兩者都最優（還需兩者都可行）
+• P 不可行 ⇒ D 不可行「或」無界
+• CPF 判定：唯一解與可行，兩者缺一不可
+
+========================================
+PAGE 2 — BACK SIDE
+A4 Portrait | Algorithms & Problem-Solving
+========================================
+
+[Section 1] Improving Edges（FE Q2 型）
+1. 列出全部約束，先確認題目是否有 x ≥ 0
+2. 代入 x̄，標出 active，數出 p
+   - p = n ⇒ n 組
+   - p > n ⇒ C(p, n−1) 組
+3. 每一組：
+   a. 寫出直線 x(t)
+   b. 剩下的 active 約束 ⇒ 決定 t 的方向
+   c. 寫出 Z(t)，判斷是否 improving
+   d. 代入 inactive 約束，最近的一條 ⇒ 端點
+4. 去除重複的直線；被夾成一點的組合捨棄
+5. 列出所有 improving edges（附參數範圍）；沒有 ⇒ x̄ 最優
+表格欄位：Pair │ x(t) │ 方向(由哪條約束) │ Z(t) │ improving? │ 端點(由哪條約束)
+
+[Section 2] Tableau Simplex
+0. 基本欄必須是單位向量；z-row 對應基本變數的位置為 0
+1. 進入：max 取 z-row < 0，min 取 z-row > 0；沒有 ⇒ 最優
+2. MRT：只看該欄 > 0 的列；沒有 ⇒ unbounded
+3. Pivot：pivot 列 ÷ pivot 元素；其他列 −= 係數 × 新 pivot 列
+4. 檢查：所有基本欄為單位向量；RHS ≥ 0
+• Unbounded 的寫法：令 entering = k、其他非基本 = 0，基本變數照 tableau 寫出 ⇒ z_k → ∞
+• Tie-break 列表：候選 │ c̄ │ t │ Δz = c̄·t
+
+[Section 3] Two-Phase（FE Q3 型）
+1. 轉成 SEF：≤ 加 +s；≥ 加 −s
+2. 每一列：若有「只出現在本列、且係數與 RHS 同號」的變數，當作 slack；否則加 ±w（與 RHS 同號）
+3. 寫出完整 artificial problem：min W = Σw，含所有約束與 ≥ 0
+4. W-row = 含 w 的各列相加（w 欄填 0）；W-row > 0 的變數進入
+5. Phase 1 迭代（用 Bland）；w 離開基底後即可刪掉該欄
+6. W* > 0 ⇒ 原問題 infeasible，停止
+   W* = 0 但 w 仍在基底 ⇒ 在該列找任一非零係數做 pivot（退化，t = 0）
+7. Phase 2：換回原目標，消去基本變數後寫成 z-row，依 max 規則繼續
+8. 結論：W* = 0 ⇒ 原問題可行；寫出 x* 與 Z*
+
+[Section 4] Revised Simplex（FE Q4 型）
+初始：J_B = 各 slack，B⁻¹ = I，x_B = b
+每次迭代：
+1. 列出 J_B（有順序）、x_B、c_B（順序與 J_B 一致）
+2. y = c_Bᵀ B⁻¹
+3. c̄ⱼ = cⱼ − y·aⱼ；全部 ≤ 0 ⇒ 最優
+4. Bland：取 c̄ > 0 中下標最小者進入
+5. d = B⁻¹aₖ；ratio 只看 dᵢ > 0；平手取下標最小者離開
+6. 原地替換；x_Bᵢ −= dᵢ·t；x_k = t
+7. 更新 B⁻¹：R_r ÷ d_r；Rᵢ −= dᵢ·R_r
+8. 驗算：Δz = c̄ₖ·t；最優時 bᵀy = z*
+• 殘留 artificial w_r（Phase 1 結束仍在基底）：
+  計算 (B⁻¹ 的第 r 列)·aⱼ，找一個 ≠ 0 的 j 做 pivot
+
+[Section 5] C.S. 三步（FE Q1(a)(iv) 型）
+0. 寫出 dual
+1. 主問題可行：逐條標 tight 或 slack（寫出 slack 值）
+2. C.S. 解 y：sᵢ > 0 ⇒ yᵢ = 0；xⱼ > 0 ⇒ 第 j 條對偶約束取等號
+3. 對偶可行：y ≥ 0，且其餘對偶約束（xⱼ = 0 的那幾條）都成立
+   - 成立 ⇒ x* 最優；驗算 cᵀx* = bᵀy*
+   - 不成立（且 y 唯一）⇒ x* 不是最優
+• 參數版：解出 y(c)，再寫出 y(c) ≥ 0 與其餘對偶約束 ⇒ 得到 c 的條件
+• 改進非最優解：yᵢ < 0 ⇒ 放鬆約束 i；解 Ad = −eᵢ，沿 d 走到某變數變為 0
+• Weak duality 證明（每個 ≤ 都要寫依據）：
+  cᵀx̄ ≤ Σ (Aᵀȳ)ⱼ·x̄ⱼ   [D 可行，x̄ ≥ 0]
+       = Σ (Ax̄)ᵢ·ȳᵢ    [重新分組]
+       ≤ bᵀȳ           [P 可行，ȳ ≥ 0]
+
+[Section 6] Sensitivity 步驟
+1. 先判斷該變數是 basic 還是 nonbasic
+2. 改 c：
+   - nonbasic ⇒ 只算這一個 c̄
+   - basic ⇒ 以參數重算 y，所有非基本 c̄ ≤ 0，取交集
+3. 改 b：x_B = B⁻¹b(θ) ≥ 0 取交集；新最優值 z* + y·Δb
+4. 新變數：c̄₀ = c₀ − y·a₀
+5. 超出範圍：讓 c̄ > 0 的變數進入，繼續 revised simplex
+
+[Section 7] 失分警示
+• 漏掉 x ≥ 0，或題目沒有卻自己加上
+• 退化點只檢查了 n 組
+• z-row 正負號搞反；Phase 1 誤用 max 規則
+• MRT 把 ≤ 0 的係數也算進去
+• Bland 比的是變數下標，不是列號
+• Phase 2 的 z-row 忘了消去基本變數
+• c_B 的順序錯；更動了 J_B 的欄位位置
+• 改 basic c 時只檢查了一個 c̄
+• 超出範圍仍用 shadow price 預測
+• 宣稱 unbounded 或 infeasible 卻沒有證明
+• 沒有寫結論句與目標值
+
+[Section 8] 考場流程
+• 每題開始前先標出：max 或 min？有沒有 x ≥ 0？題目指定什麼方法？
+• 每題約 25 分鐘
+• 最後 10 分鐘：驗算 cᵀx* = bᵀy*，並把 x* 代回約束

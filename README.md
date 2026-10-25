@@ -9,12 +9,14 @@ NTU MSc Modelling and Simulation，MH6503 Mathematical Programming and Optimisat
 | 階段 | 內容 | 狀態 |
 |---|---|---|
 | 1 | 教材盤點與課程知識地圖 | 完成 |
-| 2 | 逐章教學與概念理解 | 進行中（主題 1） |
-| 3 | 解題能力訓練（Level 1–3） | 未開始 |
-| 4 | 考古題專項分析 | 未開始 |
-| 5 | A4 雙面 Cheatsheet | 未開始 |
+| 2 | 逐章教學與概念理解 | 互動教學進行中（主題 1）；完整書面教材已完成 |
+| 3 | 解題能力訓練 | 練習題全解已完成（`OR_Exam_Prep/02_Practice`） |
+| 4 | 考古題專項分析 | 完成（`OR_Exam_Prep/03_Final_Exam`） |
+| 5 | A4 雙面 Cheatsheet | 完成（`OR_Exam_Prep/04_Cheatsheet`，須手抄） |
 
 ## 文件
+
+- [`OR_Exam_Prep/`](OR_Exam_Prep/README.md)：完整複習文件包（知識地圖、概念推導、解題模板、73 題詳解、常見錯誤、期末考解析、考試策略、A4 Cheatsheet）
 
 - [`docs/01_material_index_and_knowledge_map.md`](docs/01_material_index_and_knowledge_map.md)：教材索引（含期末考原卷與 Tutorial 5 詳解）、15 個主題的知識地圖、題型對照表、教材差異與缺漏、建議複習順序
 - [`docs/02_topic01_cpf_edges.md`](docs/02_topic01_cpf_edges.md)：主題 1 幾何 Simplex（CPF、Edge、Improving edge、Adjacent CPF）
