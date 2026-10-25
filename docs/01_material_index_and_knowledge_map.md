@@ -35,7 +35,7 @@
 | Tutorial_2_Solutions | L2 | 6 | 8 | 有 | CPF 判斷（Q1, Q7）、improving edges（Q2, Q4a, Q5a, Q6, Q8）、edge 終點 adjacent CPF（Q3, Q4b, Q5b）、degenerate corner（Q5） |
 | Tutorial_3_Solutions | L3 | 6 | 8 | 有 | 用 ERO 寫 edge（Q1–2）、basis / BFS / adjacent（Q3, Q7）、CPF⇔BFS（Q4–5）、無界 edge（Q6）、基本解與幾何對應（Q8） |
 | Tutorial_4_Solutions | L4 | 3 | 4 | 有 | reduced cost 與 improving edge（Q1）、degenerate pivot（Q2）、optimality 證明（Q3）、unboundedness 證明（Q4） |
-| **Tutorial_5.pdf** | L5 | 2 | 4 | **無（只有題目）** | tableau simplex（Q1–2）、三種 tie-breaking rule（Q3）、degeneracy（Q4） |
+| Tutorial_5.pdf ＋ Tutorial_5_Solutions（2026-10-25 補上） | L5 | 2＋4 | 4 | 有 | tableau simplex（Q1–2）、三種 tie-breaking rule（Q3）、degeneracy（Q4） |
 | Tutorial_6_Solutions | L6 | 7 | 5 | 有 | 建 artificial problem（Q1）、Phase 1 判不可行（Q2）、殘留 artificial（Q3）、完整 two-phase（Q4）、定理證明（Q5） |
 | Tutorial_7_Solutions | L7 | 5 | 5 | 有 | revised simplex（Q1, Q2, Q4）、$[B\mid I]$ 求 $B^{-1}$（Q3）、$B^{-1}$ 更新原理與效率（Q5） |
 | Tutorial_8_Solutions | L8 | 6 | 7 | 有 | 寫 dual 與 C.S.（Q1）、weak duality 證明（Q2）、complementary basis（Q3, Q5）、C.S. 恆等式（Q4）、矩陣證明（Q6）、diet 對偶與 shadow price 解釋（Q7） |
@@ -46,7 +46,8 @@
 
 | 檔名 | 頁數 | 題數與配分 | 有無詳解 | 備註 |
 |---|---|---|---|---|
-| MH6503_2025_26_Full_Solutions.pdf | 18 | Q1–Q4，各 25 分，共 100 分 | 有（排版詳解） | **檔案標題寫的是「2025/26 Trimester 1 – Midterm Test」**，不是期末考 |
+| Final_Exam.pdf（2026-10-25 補上） | 4 | Q1–Q4，各 25 分，共 100 分 | 無（題目原卷） | NTU Trimester I Examination 2025-2026，2 小時，Restricted open book：可帶**一張雙面 A4、內容須手寫**的參考紙 |
+| MH6503_2025_26_Full_Solutions.pdf | 18 | 同上四題 | 有（排版詳解） | 題目與原卷相同，頁首誤標為「Midterm Test」。Q2 有兩處與原卷不一致，見第 5 節 |
 
 ### D. 閱讀狀態
 
@@ -166,13 +167,15 @@ L1 建模 + 圖解
 
 ## 5. 未辨識清楚或缺漏的資訊
 
-1. **考古題不是期末考**：檔案每頁標題為「2025/26 Trimester 1 – Midterm Test」，內容只到 L8–L9 的對偶與 C.S.，沒有 sensitivity analysis。需要確認：是否另有真正的期末考考古題？
-2. **Tutorial 5 沒有詳解**：只有題目（`MH6503_Tutorial_5.pdf`）。之後練習時我會自行求解並用 Python 驗證，標為〔補充〕。
-3. **L10 投影片可能缺漏**：Tutorial 10 涵蓋基本係數、RHS、新增變數的 sensitivity；L9 投影片 Part 3 明說「Other kinds of changes are covered in the next section」，但資料夾沒有這一份。需要確認是否有第 10 講講義。
-4. **手寫內容**：絕大部分可辨識，以重述投影片為主。少數字跡潦草處（例如 L4 p21 上方被塗掉的字、L4 p69 的「~~leaving~~ entering」更正）不影響理解。After 3 Part 4–5 與 After 4 少數頁未逐字轉錄。
-5. **考古題 Q2 附註**：題目寫「(3) 的 RHS 由 −6 改為 −5（As on the supplied paper）」，且沒有非負限制；詳解特別指出這點，作答時不能自動加上 $x\ge0$。
-
----
+1. ~~考古題不是期末考~~：已補上原卷 `Final_Exam.pdf`，確認詳解檔就是 2025-26 期末考，只是頁首誤標 Midterm。
+2. ~~Tutorial 5 沒有詳解~~：已補上。
+3. L10 投影片缺漏：依使用者指示不處理，sensitivity 的其餘部分以 Tutorial 10 為準。
+4. 手寫內容：絕大部分可辨識，以重述投影片為主。少數字跡潦草處不影響理解。After 3 Part 4–5 與 After 4 少數頁未逐字轉錄。
+5. **期末考 Q2：詳解檔與原卷不一致**
+   - 原卷有 $x_1,x_2,x_3\ge0$；詳解檔寫「Question 2 does not state $x_1,x_2,x_3\ge0$」，所以沒有加非負限制。這與原卷不符。
+   - 加上 $x\ge0$ 之後，$(1,2,0)$ 有 4 條 active 約束（(1)(2)(3) 與 $x_3\ge0$），是 degenerate CPF，要檢查 $\binom42=6$ 組。詳解檔只檢查 3 組，其中把一條違反 $x_3\ge0$ 的射線當成 edge，也漏掉兩條 edge。最後結論（只有一條 improving edge）不變，但過程要重做，於第四階段處理。
+   - 詳解檔說 (3) 的 RHS「由 −6 改為 −5」。原卷印的就是 −5。
+6. **Cheatsheet 規格**：考試規定參考紙「TEXTS HANDWRITTEN ON THE A4 PAPER」。用 Canva 排版、印出來的版本不能帶進考場，第五階段要改成手抄底稿。
 
 ## 6. 建議複習順序
 
