@@ -6,7 +6,7 @@
 - 10 份 Tutorial 與詳解
 - 2025-26 期末考原卷與詳解
 
-說明一律使用繁體中文，術語保留英文，數學式以 LaTeX 撰寫；只有 `10_Cheatsheet_Canva_Ready.txt` 改用 Unicode 符號，方便貼到 Canva。
+說明一律使用繁體中文，術語保留英文，數學式以 LaTeX 撰寫；只有 `04_Cheatsheet/` 中的 .txt 檔改用 Unicode 符號，方便貼到 Canva。
 
 ## 檔案與狀態
 
@@ -22,6 +22,8 @@
 | `04_Cheatsheet/08_Cheatsheet_Front.md` | A4 正面：Concepts & Formulas（3 欄） | 完成 |
 | `04_Cheatsheet/09_Cheatsheet_Back.md` | A4 背面：Algorithms & Problem-Solving（3 欄） | 完成 |
 | `04_Cheatsheet/10_Cheatsheet_Canva_Ready.txt` | 正反面濃縮後的最終純文字版，可直接貼到 Canva | 完成 |
+| `04_Cheatsheet/OR_Cheatsheet_Complete.txt` | 解題導向完整版：23 個題型，各含辨識、邏輯、SOP、公式、完整實戰案例、易錯、速查；附相似題型與停止條件總表 | 完成 |
+| `04_Cheatsheet/OR_Cheatsheet_Quick_Reference.txt` | 由完整版濃縮的速查版：辨識、方法選擇、公式、步驟、停止條件、驗證、易錯 | 完成 |
 
 ## 建議閱讀順序
 
